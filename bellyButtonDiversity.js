@@ -151,6 +151,43 @@ function bubbleChart(i){
 
 }
 
+// Now, we need to make a Function that builds a gauge chart
+function gaugeChart(i){
+    //console.log(i); //check to see if it works
+    //we will fetch the same data used the bar chart function 
+    d3.json("samples.json").then((data)=>{
+        let wfreqData = data.metadata;
+        //console.log(wfreqData); // this gives us the array of each sample with its
+        //demographic info
+        
+        // we need to get the washfrequency of each sample id
+        let wfreqArray = wfreqData.filter(results => results.id == i );
+        //console.log(wfreqArray); // prints out the array of the first sample and its details 
+        // // we need index 0 from the array and fetch the wfreq data related to it 
+        let wfreqArrayResult = wfreqArray[0].wfreq;
+        //console.log(wfreqArrayResult);
+
+        var data = [
+            {
+                domain: { x: [0, 1], y: [0, 1] },
+                value: wfreqArrayResult,
+                title: { text: "Belly Button Washing Frequency" },
+                type: "indicator",
+                mode: "gauge+number"
+            }
+        ];
+        
+        var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+        Plotly.newPlot("gauge", data, layout);
+
+
+
+    });
+
+}
+
+
+
 
 
 function init(){
@@ -176,6 +213,7 @@ function init(){
         populateMetaData(sample1);
         barChart(sample1);
         bubbleChart(sample1);
+        gaugeChart(sample1);
 
     });
 
@@ -190,6 +228,8 @@ function optionChanged(item){
     barChart(item);
     // call the bubble chart function
     bubbleChart(item);
+    //call to build the wfreq function
+    gaugeChart(item)
 }
 // call the init function
 init();
