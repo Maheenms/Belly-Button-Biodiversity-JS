@@ -138,7 +138,7 @@ function bubbleChart(i){
         }
 
         let layout ={
-            title : "Bacteria Culture per Sample",
+            title : "Belly Button Washing Frequency",
             hovermode : "closest",
             xaxis : {title: "OTU ID"}
         }
